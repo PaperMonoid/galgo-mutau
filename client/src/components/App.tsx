@@ -1,9 +1,11 @@
+import "./App.css";
 import * as React from "react";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import AppBar from "./AppBar";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -19,6 +21,7 @@ class App extends React.Component<Props, {}> {
     const { classes } = this.props;
     return (
       <div>
+        <AppBar auth={true} />
         <Typography variant="h1" gutterBottom>
           Galgo μτ
         </Typography>
