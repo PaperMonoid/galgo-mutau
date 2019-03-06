@@ -23,6 +23,10 @@ module.exports = {
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" },
       { test: /\.css$/, loader: "style-loader!css-loader" },
       {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: "file-loader?name=/media/[name].[ext]"
+      },
+      {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {

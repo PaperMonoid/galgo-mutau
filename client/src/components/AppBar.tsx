@@ -13,6 +13,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import LogoIcon from "./LogoIcon";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -71,6 +72,7 @@ class App extends React.Component<Props, State> {
             >
               <MenuIcon />
             </IconButton>
+            <LogoIcon />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Galgo μτ
             </Typography>
