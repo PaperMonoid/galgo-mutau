@@ -19,7 +19,7 @@ class App extends React.Component<Props, {}> {
     const { classes } = this.props;
     return (
       <div>
-        <Typography component="h2" variant="h1" gutterBottom>
+        <Typography variant="h1" gutterBottom>
           Galgo μτ
         </Typography>
         <br />
