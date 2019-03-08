@@ -21,7 +21,8 @@ const styles = (theme: Theme) =>
       flexGrow: 1
     },
     grow: {
-      flexGrow: 1
+      flexGrow: 1,
+      marginLeft: 10
     },
     menuButton: {
       marginLeft: -12,
@@ -63,7 +64,7 @@ class App extends React.Component<Props, State> {
     const open = Boolean(anchorEl);
     return (
       <div>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
@@ -72,7 +73,7 @@ class App extends React.Component<Props, State> {
             >
               <MenuIcon />
             </IconButton>
-            <LogoIcon />
+            <LogoIcon width={32} height={32} />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Galgo μτ
             </Typography>
