@@ -58,6 +58,8 @@ class App extends React.Component<Props, State> {
     this.setState({ anchorEl: null });
   };
 
+  //<LogoIcon width={32} height={32} />
+
   render() {
     const { anchorEl } = this.state;
     const { auth, classes } = this.props;
@@ -73,7 +75,6 @@ class App extends React.Component<Props, State> {
             >
               <MenuIcon />
             </IconButton>
-            <LogoIcon width={32} height={32} />
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Galgo μτ
             </Typography>
