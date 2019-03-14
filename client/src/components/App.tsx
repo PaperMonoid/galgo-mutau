@@ -13,7 +13,8 @@ const styles = (theme: Theme) =>
   createStyles({
     app: {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      minHeight: "100vh"
     },
     content: {
       flexGrow: 1,

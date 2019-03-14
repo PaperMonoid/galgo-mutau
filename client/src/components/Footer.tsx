@@ -6,7 +6,6 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = (theme: Theme) =>
   createStyles({
     footer: {
-      flexGrow: 1,
       color: theme.palette.grey["50"],
       background: theme.palette.grey["A700"],
       boxSizing: "border-box",
