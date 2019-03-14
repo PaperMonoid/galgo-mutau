@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -21,7 +22,14 @@ const styles = (theme: Theme) =>
       flexGrow: 1
     },
     grow: {
-      flexGrow: 1,
+      flexGrow: 1
+    },
+    logoButton: {
+      display: "flex",
+      textDecoration: "none",
+      color: "black"
+    },
+    logoText: {
       marginLeft: 10
     },
     menuButton: {
@@ -58,8 +66,6 @@ class App extends React.Component<Props, State> {
     this.setState({ anchorEl: null });
   };
 
-  //<LogoIcon width={32} height={32} />
-
   render() {
     const { anchorEl } = this.state;
     const { auth, classes } = this.props;
@@ -75,9 +81,18 @@ class App extends React.Component<Props, State> {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              Galgo μτ
-            </Typography>
+
+            <Link to="/" className={classes.logoButton}>
+              <LogoIcon width={32} height={32} />
+              <Typography
+                variant="h6"
+                color="inherit"
+                className={classes.logoText}
+              >
+                Galgo μτ
+              </Typography>
+            </Link>
+            <div className={classes.grow} />
             {auth && (
               <div>
                 <IconButton

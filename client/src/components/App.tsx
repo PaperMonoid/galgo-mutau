@@ -17,6 +17,7 @@ const styles = (theme: Theme) =>
       minHeight: "100vh"
     },
     content: {
+      background: theme.palette.grey["50"],
       flexGrow: 1,
       marginTop: 64
     }

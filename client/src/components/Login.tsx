@@ -1,9 +1,13 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import AppBar from "./AppBar";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const styles = (theme: Theme) => {
   const _secondary = theme.palette.secondary as any;
@@ -12,21 +16,26 @@ const styles = (theme: Theme) => {
     button: {
       margin: theme.spacing.unit
     },
+    textField: {
+      margin: theme.spacing.unit
+    },
     center: {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)"
-    },
-    paddedbox: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
       boxSizing: "border-box",
-      padding: 30
+      padding: 50
     },
-    content: {
-      textAlign: "center",
-      marginTop: 64,
-      height: "100vh",
-      width: "100%"
+    floatRight: {
+      float: "right"
+    },
+    login: {
+      boxSizing: "border-box",
+      padding: 30,
+      width: 600
+    },
+    hyperlink: {
+      color: theme.palette.primary.main
     }
   });
 };
@@ -37,12 +46,43 @@ class Login extends React.Component<Props, {}> {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <div>
-          <Typography variant="h1" gutterBottom>
-            Inicio sesión
+      <div className={classes.center}>
+        <Paper className={classes.login}>
+          <Typography variant="h4" gutterBottom>
+            Acceder
           </Typography>
-        </div>
+          <TextField
+            id="nocontrol"
+            label="Número de control"
+            className={classes.textField}
+            margin="normal"
+            fullWidth
+            autoFocus
+          />
+          <TextField
+            id="clave"
+            label="Contraseña"
+            className={classes.textField}
+            margin="normal"
+            type="password"
+            autoComplete="current-password"
+            fullWidth
+          />
+          <Typography variant="caption" gutterBottom>
+            <Checkbox /> He leído y estoy de acuerdo con los{" "}
+            <Link to="/terminos-y-condiciones" className={classes.hyperlink}>
+              {" "}
+              términos y condiciones
+            </Link>
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            className={[classes.button, classes.floatRight].join(" ")}
+          >
+            Siguiente
+          </Button>
+        </Paper>
       </div>
     );
   }

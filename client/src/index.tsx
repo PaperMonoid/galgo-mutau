@@ -14,6 +14,8 @@ const theme = createMuiTheme({
   }
 });
 
+console.log(theme);
+
 ReactDOM.render(
   <Router>
     <MuiThemeProvider theme={theme}>
