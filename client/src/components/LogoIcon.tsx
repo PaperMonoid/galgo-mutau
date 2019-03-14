@@ -4,13 +4,7 @@ import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import * as Logo from "../../media/galgo-mutau-logo.svg";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    blackwhite: {
-      filter: "grayscale(1) contrast(10)",
-      opacity: 1
-    }
-  });
+const styles = (theme: Theme) => createStyles({});
 
 interface Props extends WithStyles<typeof styles> {
   width: number;
@@ -19,14 +13,7 @@ interface Props extends WithStyles<typeof styles> {
 
 function LogoIcon(props: Props) {
   const { classes } = props;
-  return (
-    <img
-      className={classes.blackwhite}
-      width={props.width}
-      height={props.height}
-      src={Logo}
-    />
-  );
+  return <img width={props.width} height={props.height} src={Logo} />;
 }
 
 export default withStyles(styles)(LogoIcon);

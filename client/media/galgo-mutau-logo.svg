@@ -16,8 +16,8 @@
    viewBox="0 0 45.900002 45.900001"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="galgo-logo.svg"
+   inkscape:version="0.92.4 (unknown)"
+   sodipodi:docname="galgo-mutau-logo.svg"
    inkscape:export-filename="/home/tritiummonoid/Downloads/galgo-l.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
@@ -40,8 +40,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.43"
-     inkscape:cx="296.54428"
-     inkscape:cy="89.042128"
+     inkscape:cx="-154.61851"
+     inkscape:cy="84.390965"
      inkscape:document-units="mm"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -59,7 +59,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -71,30 +71,22 @@
      sodipodi:insensitive="true"
      transform="translate(-5,-4.2210522)">
     <image
-       sodipodi:absref="/home/tritiummonoid/Downloads/galgo.jpg"
-       xlink:href="galgo.jpg"
-       transform="scale(-1,1)"
-       width="254.35277"
-       height="205.66943"
-       preserveAspectRatio="none"
-       style="opacity:0;image-rendering:optimizeSpeed"
-       id="image72"
+       sodipodi:absref="/home/tritiummonoid/Development/galgo-mutau/client/media/../../../../Downloads/galgo.jpg"
+       xlink:href="../../../../Downloads/galgo.jpg"
+       y="-2.3823347"
        x="-232.25377"
-       y="-2.3823347" />
+       id="image72"
+       style="opacity:0;image-rendering:optimizeSpeed"
+       preserveAspectRatio="none"
+       height="205.66943"
+       width="254.35277"
+       transform="scale(-1,1)" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Galgo"
      transform="translate(-5,-4.2210522)">
-    <circle
-       style="opacity:1;fill:#5aa02c;fill-opacity:1;stroke:none;stroke-width:0.12144352;stroke-opacity:1"
-       id="path830"
-       cx="27.950001"
-       cy="27.171053"
-       inkscape:export-xdpi="96"
-       inkscape:export-ydpi="96"
-       r="22.950001" />
     <path
        style="fill:#3e4837;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 42.222339,30.657278 c 0,0 -5.27706,-3.881685 -6.25602,2.1008 3.16227,4.756789 3.97118,6.344813 7.41293,5.340785 2.61149,-1.044597 0.65808,-4.925448 -1.15691,-7.441585 z"
