@@ -1,10 +1,12 @@
 import "typeface-roboto";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import App from "./components/App";
+import { BrowserRouter as Router } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
 import pink from "@material-ui/core/colors/pink";
+import App from "./components/App";
+
 const theme = createMuiTheme({
   palette: {
     primary: green,
@@ -12,11 +14,11 @@ const theme = createMuiTheme({
   }
 });
 
-console.log(theme);
-
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
-    <App />
-  </MuiThemeProvider>,
+  <Router>
+    <MuiThemeProvider theme={theme}>
+      <App />
+    </MuiThemeProvider>
+  </Router>,
   document.getElementById("app")
 );
