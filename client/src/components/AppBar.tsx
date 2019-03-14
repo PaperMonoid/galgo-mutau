@@ -66,6 +66,10 @@ class App extends React.Component<Props, State> {
 
   handleClose = (): void => {
     this.setState({ anchorEl: null });
+  };
+
+  handleCloseSession = (): void => {
+    this.setState({ anchorEl: null });
     this.props.onEndSession();
   };
 
@@ -120,8 +124,9 @@ class App extends React.Component<Props, State> {
                   open={open}
                   onClose={this.handleClose}
                 >
-                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                  <MenuItem onClick={this.handleCloseSession}>
+                    Cerrar sesión
+                  </MenuItem>
                 </Menu>
               </div>
             )}

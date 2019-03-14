@@ -84,11 +84,13 @@ const styles = (theme: Theme) => {
   });
 };
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {
+  token: string;
+}
 
 class Home extends React.Component<Props, {}> {
   render() {
-    const { classes } = this.props;
+    const { token, classes } = this.props;
     return (
       <div>
         <div className={classes.content}>
@@ -112,23 +114,27 @@ class Home extends React.Component<Props, {}> {
             académica.
           </Typography>
         </div>
-        <div className={[classes.gettingstarted, classes.paddedbox].join(" ")}>
-          <Typography variant="h2" gutterBottom>
-            Para comenzar a utilizar Galgo μτ se debe de iniciar sesión con las
-            credenciales de estudiante del Kardex.
-          </Typography>
-          <FavoriteIcon className={classes.headingIcon} />
-          <br />
-          <Link to="/inicio-sesion">
-            <Button
-              variant="contained"
-              color="primary"
-              className={[classes.button, classes.floatRight].join(" ")}
-            >
-              Iniciar Sesión
-            </Button>
-          </Link>
-        </div>
+        {!token && (
+          <div
+            className={[classes.gettingstarted, classes.paddedbox].join(" ")}
+          >
+            <Typography variant="h2" gutterBottom>
+              Para comenzar a utilizar Galgo μτ se debe de iniciar sesión con
+              las credenciales de estudiante del Kardex.
+            </Typography>
+            <FavoriteIcon className={classes.headingIcon} />
+            <br />
+            <Link to="/inicio-sesion">
+              <Button
+                variant="contained"
+                color="primary"
+                className={[classes.button, classes.floatRight].join(" ")}
+              >
+                Iniciar Sesión
+              </Button>
+            </Link>
+          </div>
+        )}
         <div className={[classes.faq, classes.paddedbox].join(" ")}>
           <Typography variant="h2" gutterBottom>
             FAQ

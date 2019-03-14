@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
@@ -44,6 +44,7 @@ const styles = (theme: Theme) => {
 interface Props extends WithStyles<typeof styles> {
   onStartSession(token: string): void;
   onEndSession(): void;
+  token: string;
 }
 
 interface State {
@@ -90,8 +91,11 @@ class Login extends React.Component<Props, State> {
   };
 
   render() {
-    const { classes } = this.props;
+    const { token, classes } = this.props;
     const { controlNumber, password, tos } = this.state;
+    if (token) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className={classes.center}>
         <Paper className={classes.login}>

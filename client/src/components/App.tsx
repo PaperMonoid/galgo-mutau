@@ -54,13 +54,18 @@ class App extends React.Component<Props, State> {
         />
         <div className={classes.content}>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/"
+              render={props => <Home token={this.state.token} {...props} />}
+            />
             <Route
               path="/inicio-sesion"
               render={props => (
                 <Login
                   onStartSession={this.onStartSession}
                   onEndSession={this.onEndSession}
+                  token={this.state.token}
                   {...props}
                 />
               )}
