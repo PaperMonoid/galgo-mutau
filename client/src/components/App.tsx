@@ -25,16 +25,46 @@ const styles = (theme: Theme) =>
 
 interface Props extends WithStyles<typeof styles> {}
 
-class App extends React.Component<Props, {}> {
+interface State {
+  token: string;
+}
+
+class App extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { token: null };
+  }
+
+  onStartSession = (token: string) => {
+    this.setState({ token: token });
+  };
+
+  onEndSession = () => {
+    this.setState({ token: null });
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div className={classes.app}>
-        <AppBar auth={true} />
+        <AppBar
+          onStartSession={this.onStartSession}
+          onEndSession={this.onEndSession}
+          token={this.state.token}
+        />
         <div className={classes.content}>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/inicio-sesion" component={Login} />
+            <Route
+              path="/inicio-sesion"
+              render={props => (
+                <Login
+                  onStartSession={this.onStartSession}
+                  onEndSession={this.onEndSession}
+                  {...props}
+                />
+              )}
+            />
           </Switch>
         </div>
         <Footer />

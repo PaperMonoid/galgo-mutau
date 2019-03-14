@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
+import axios from "axios";
 
 const styles = (theme: Theme) => {
   const _secondary = theme.palette.secondary as any;
@@ -40,11 +41,57 @@ const styles = (theme: Theme) => {
   });
 };
 
-interface Props extends WithStyles<typeof styles> {}
+interface Props extends WithStyles<typeof styles> {
+  onStartSession(token: string): void;
+  onEndSession(): void;
+}
 
-class Login extends React.Component<Props, {}> {
+interface State {
+  controlNumber: string;
+  password: string;
+  tos: boolean;
+}
+
+class Login extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      controlNumber: "",
+      password: "",
+      tos: false
+    };
+  }
+
+  handleControlNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ controlNumber: event.target.value });
+  };
+
+  handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ password: event.target.value });
+  };
+
+  handleTosChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState({ tos: event.target.checked });
+  };
+
+  handleNext = (event: React.MouseEvent<HTMLElement>) => {
+    axios
+      .post("/api/v1/login", this.state)
+      .then(
+        function(response: { data: string }) {
+          this.props.onStartSession(response.data);
+        }.bind(this)
+      )
+      .catch(
+        function(response: { data: string }) {
+          this.props.onEndSession();
+        }.bind(this)
+      );
+  };
+
   render() {
     const { classes } = this.props;
+    const { controlNumber, password, tos } = this.state;
     return (
       <div className={classes.center}>
         <Paper className={classes.login}>
@@ -52,24 +99,32 @@ class Login extends React.Component<Props, {}> {
             Acceder
           </Typography>
           <TextField
-            id="nocontrol"
+            id="controlNumber"
             label="Número de control"
             className={classes.textField}
+            value={controlNumber}
+            onChange={this.handleControlNumberChange}
             margin="normal"
             fullWidth
             autoFocus
           />
           <TextField
-            id="clave"
+            id="password"
             label="Contraseña"
             className={classes.textField}
             margin="normal"
             type="password"
             autoComplete="current-password"
+            value={password}
+            onChange={this.handlePasswordChange}
             fullWidth
           />
           <Typography variant="caption" gutterBottom>
-            <Checkbox /> He leído y estoy de acuerdo con los{" "}
+            <Checkbox
+              checked={this.state.tos}
+              onChange={this.handleTosChange}
+            />{" "}
+            He leído y estoy de acuerdo con los{" "}
             <Link to="/terminos-y-condiciones" className={classes.hyperlink}>
               {" "}
               términos y condiciones
@@ -79,6 +134,7 @@ class Login extends React.Component<Props, {}> {
             variant="contained"
             color="primary"
             className={[classes.button, classes.floatRight].join(" ")}
+            onClick={this.handleNext}
           >
             Siguiente
           </Button>

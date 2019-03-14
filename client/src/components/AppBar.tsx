@@ -39,7 +39,9 @@ const styles = (theme: Theme) =>
   });
 
 interface Props extends WithStyles<typeof styles> {
-  auth: boolean;
+  onStartSession(token: string): void;
+  onEndSession(): void;
+  token: string;
 }
 
 interface State {
@@ -64,11 +66,12 @@ class App extends React.Component<Props, State> {
 
   handleClose = (): void => {
     this.setState({ anchorEl: null });
+    this.props.onEndSession();
   };
 
   render() {
     const { anchorEl } = this.state;
-    const { auth, classes } = this.props;
+    const { token, classes } = this.props;
     const open = Boolean(anchorEl);
     return (
       <div>
@@ -93,7 +96,7 @@ class App extends React.Component<Props, State> {
               </Typography>
             </Link>
             <div className={classes.grow} />
-            {auth && (
+            {token && (
               <div>
                 <IconButton
                   aria-owns={open ? "menu-appbar" : undefined}
