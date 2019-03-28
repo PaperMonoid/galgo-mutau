@@ -3,8 +3,8 @@ services:
   galgo-mutau-database:
     image: mongo
 
-  galgu-mutau-client:
-    image: ngnix
+  galgo-mutau-client:
+    image: nginx
     links:
       - galgo-mutau-server
     ports:
@@ -17,7 +17,7 @@ services:
     depends_on:
       - galgo-mutau-database
     links:
-      - galgu-mutau-database
+      - galgo-mutau-database
     environment:
       - SECRET=foo
     ports:
