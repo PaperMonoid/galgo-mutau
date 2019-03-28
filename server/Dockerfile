@@ -1,3 +1,13 @@
 FROM node
-COPY . server
-ENTRYPOINT ./src/index.js
+
+WORKDIR /usr/server
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 8080
+
+CMD [ "npm", "start" ]

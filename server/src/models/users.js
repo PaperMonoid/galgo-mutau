@@ -21,3 +21,5 @@ function authenticate(noControl, password) {
     .then(parseHtml)
     .then(getToken);
 }
+
+module.exports = authenticate;

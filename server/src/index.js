@@ -3,9 +3,19 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 
 const secret = process.env["SECRET"];
-const app = express();
-const port = 3000;
+const port = 8080;
 
+const app = express();
+app.disable("x-powered-by");
 app.use(bodyParser.json());
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.get("/ping", function(req, res) {
+  res.status(200).send("pong");
+});
+
+const users = require("./routes/users");
+app.use("/users", users);
+
+app.listen(port, () =>
+  console.log(`Galgo MuTau server listening on port ${port}!`)
+);

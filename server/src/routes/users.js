@@ -1,3 +1,6 @@
+var express = require("express");
+var router = express.Router();
+
 router.post("/login", function(req, res) {
   if (req.body.tos) {
     res.send(jwt.sign({ payload: "yay" }, secret));
@@ -6,4 +9,4 @@ router.post("/login", function(req, res) {
   }
 });
 
-export default router;
+module.exports = router;
