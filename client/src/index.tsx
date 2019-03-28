@@ -1,4 +1,6 @@
 import "typeface-roboto";
+import "./index.html";
+import "./media/favicon.ico";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";

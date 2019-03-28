@@ -2,7 +2,7 @@ import * as React from "react";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import * as Logo from "../../media/galgo-mutau-logo.svg";
+import * as Logo from "../media/galgo-mutau-logo.svg";
 
 const styles = (theme: Theme) => createStyles({});
 
