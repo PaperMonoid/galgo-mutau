@@ -48,27 +48,39 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface State {
-  controlNumber: string;
+  control: string;
   password: string;
   tos: boolean;
+  invalidCredentials: boolean;
 }
 
 class Login extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      controlNumber: "",
+      control: "",
       password: "",
-      tos: false
+      tos: false,
+      invalidCredentials: false
     };
   }
 
-  handleControlNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ controlNumber: event.target.value });
+  handleControlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (/^[0-9]{0,8}$/.test(event.target.value)) {
+      this.setState({
+        control: event.target.value,
+        invalidCredentials: false
+      });
+    }
   };
 
   handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ password: event.target.value });
+    if (/^.{0,10}$/.test(event.target.value)) {
+      this.setState({
+        password: event.target.value,
+        invalidCredentials: false
+      });
+    }
   };
 
   handleTosChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,14 +89,16 @@ class Login extends React.Component<Props, State> {
 
   handleNext = (event: React.MouseEvent<HTMLElement>) => {
     axios
-      .post("/api/v1/login", this.state)
+      .post("http://localhost:8080/api/v1/grupos", this.state)
       .then(
         function(response: { data: string }) {
+          this.setState({ invalidCredentials: false });
           this.props.onStartSession(response.data);
         }.bind(this)
       )
       .catch(
         function(response: { data: string }) {
+          this.setState({ invalidCredentials: true });
           this.props.onEndSession();
         }.bind(this)
       );
@@ -92,7 +106,7 @@ class Login extends React.Component<Props, State> {
 
   render() {
     const { token, classes } = this.props;
-    const { controlNumber, password, tos } = this.state;
+    const { control, password, tos, invalidCredentials } = this.state;
     if (token) {
       return <Redirect to="/" />;
     }
@@ -103,11 +117,11 @@ class Login extends React.Component<Props, State> {
             Acceder
           </Typography>
           <TextField
-            id="controlNumber"
+            id="control"
             label="Número de control"
             className={classes.textField}
-            value={controlNumber}
-            onChange={this.handleControlNumberChange}
+            value={control}
+            onChange={this.handleControlChange}
             margin="normal"
             fullWidth
             autoFocus
@@ -134,6 +148,11 @@ class Login extends React.Component<Props, State> {
               términos y condiciones
             </Link>
           </Typography>
+          {invalidCredentials && (
+            <Typography variant="caption" color="secondary" gutterBottom>
+              Credenciales inválidas.
+            </Typography>
+          )}
           <Button
             variant="contained"
             color="primary"

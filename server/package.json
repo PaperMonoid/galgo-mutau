@@ -10,7 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/TritiumMonoid/galgo-mutau.git"
   },
-  "keywords": ["spa", "genetic-algorithm", "multi-objective", "schedule"],
+  "keywords": [
+    "spa",
+    "genetic-algorithm",
+    "multi-objective",
+    "schedule"
+  ],
   "author": "TritiumMonoid",
   "license": "MIT",
   "bugs": {
@@ -23,6 +28,7 @@
     "express": "^4.16.4",
     "jsdom": "^14.0.0",
     "jsonwebtoken": "^8.5.0",
-    "mongoose": "^5.4.20"
+    "mongoose": "^5.4.20",
+    "ramda": "^0.26.1"
   }
 }
