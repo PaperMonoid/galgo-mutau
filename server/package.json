@@ -8,20 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TritiumMonoid/galgo-mutau.git"
+    "url": "git+https://github.com/PaperMonoid/galgo-mutau.git"
   },
-  "keywords": [
-    "spa",
-    "genetic-algorithm",
-    "multi-objective",
-    "schedule"
-  ],
-  "author": "TritiumMonoid",
+  "keywords": ["spa", "genetic-algorithm", "multi-objective", "schedule"],
+  "author": "PaperMonoid",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/TritiumMonoid/galgo-mutau/issues"
+    "url": "https://github.com/PaperMonoid/galgo-mutau/issues"
   },
-  "homepage": "https://github.com/TritiumMonoid/galgo-mutau#readme",
+  "homepage": "https://github.com/PaperMonoid/galgo-mutau#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
