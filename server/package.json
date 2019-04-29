@@ -10,7 +10,12 @@
     "type": "git",
     "url": "git+https://github.com/PaperMonoid/galgo-mutau.git"
   },
-  "keywords": ["spa", "genetic-algorithm", "multi-objective", "schedule"],
+  "keywords": [
+    "spa",
+    "genetic-algorithm",
+    "multi-objective",
+    "schedule"
+  ],
   "author": "PaperMonoid",
   "license": "MIT",
   "bugs": {
@@ -20,6 +25,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "jsdom": "^14.0.0",
     "jsonwebtoken": "^8.5.0",

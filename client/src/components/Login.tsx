@@ -8,7 +8,10 @@ import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import axios from "axios";
+import GroupResponse from "../models/group/GroupResponse";
+import GroupResponseError from "../models/group/GroupResponseError";
+import GroupStore from "../models/group/GroupStore";
+import GroupStoreFactory from "../models/group/GroupStoreFactory";
 
 const styles = (theme: Theme) => {
   const _secondary = theme.palette.secondary as any;
@@ -48,7 +51,7 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 interface State {
-  control: string;
+  username: string;
   password: string;
   tos: boolean;
   invalidCredentials: boolean;
@@ -58,17 +61,17 @@ class Login extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      control: "",
+      username: "",
       password: "",
       tos: false,
       invalidCredentials: false
     };
   }
 
-  handleControlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[0-9]{0,8}$/.test(event.target.value)) {
       this.setState({
-        control: event.target.value,
+        username: event.target.value,
         invalidCredentials: false
       });
     }
@@ -88,17 +91,25 @@ class Login extends React.Component<Props, State> {
   };
 
   handleNext = (event: React.MouseEvent<HTMLElement>) => {
-    axios
-      .post("http://localhost:8080/api/v1/grupos", this.state)
+    const { username, password, tos } = this.state;
+    GroupStoreFactory.fromNetwork(username, password, tos)
+      .all()
       .then(
-        function(response: { data: string }) {
+        function(response: GroupResponse) {
           this.setState({ invalidCredentials: false });
-          this.props.onStartSession(response.data);
+          this.props.onStartSession(response.token);
         }.bind(this)
       )
       .catch(
-        function(response: { data: string }) {
-          this.setState({ invalidCredentials: true });
+        function(response: GroupResponseError) {
+          switch (response) {
+            case GroupResponseError.InvalidCredentials:
+              this.setState({ invalidCredentials: true });
+              break;
+            case GroupResponseError.InvalidTos:
+              alert("NO TOS");
+              break;
+          }
           this.props.onEndSession();
         }.bind(this)
       );
@@ -106,7 +117,7 @@ class Login extends React.Component<Props, State> {
 
   render() {
     const { token, classes } = this.props;
-    const { control, password, tos, invalidCredentials } = this.state;
+    const { username, password, tos, invalidCredentials } = this.state;
     if (token) {
       return <Redirect to="/" />;
     }
@@ -117,11 +128,11 @@ class Login extends React.Component<Props, State> {
             Acceder
           </Typography>
           <TextField
-            id="control"
+            id="username"
             label="Número de control"
             className={classes.textField}
-            value={control}
-            onChange={this.handleControlChange}
+            value={username}
+            onChange={this.handleUsernameChange}
             margin="normal"
             fullWidth
             autoFocus
