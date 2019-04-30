@@ -22,7 +22,7 @@ export default class NetworkGroupStore implements GroupStore {
     const password = this.password;
     const tos = this.tos;
     return axios
-      .post("http://localhost:8080/api/v1/groups", {
+      .post("http://localhost:8080/api/v0/groups", {
         username,
         password,
         tos

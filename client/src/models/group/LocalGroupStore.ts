@@ -7,11 +7,10 @@ export default class LocalGroupStore implements GroupStore {
   private cipher: UserCipher;
   private store: GroupStore;
   private username: string;
-  private password: string;
 
   constructor(username: string, password: string, store: GroupStore) {
+    this.cipher = new UserCipher(username, password);
     this.username = username;
-    this.password = password;
     this.store = store;
   }
 
