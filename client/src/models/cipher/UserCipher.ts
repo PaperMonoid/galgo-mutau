@@ -9,10 +9,10 @@ export default class UserCipher implements Cipher {
   }
 
   encipher(message: string): string {
-    return CryptoJS.AES.encrypt(message, this.key).toString();
+    return CryptoJS.AES.encrypt(message, this.key).toString(CryptoJS.enc.Utf8);
   }
 
   decipher(message: string): string {
-    return CryptoJS.AES.decrypt(message, this.key).toString();
+    return CryptoJS.AES.decrypt(message, this.key).toString(CryptoJS.enc.Utf8);
   }
 }
