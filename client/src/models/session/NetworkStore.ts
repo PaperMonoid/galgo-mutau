@@ -22,13 +22,11 @@ export default class NetworkStore implements Store {
       return Promise.reject(new Error("Invalid terms of service"));
     }
     return axios
-      .post("http://localhost:8080/api/v0/groups", params)
+      .post("http://localhost:8080/api/v1/groups", params)
       .then(function(response: AxiosResponse) {
-        console.log(response.data);
         return { token: response.data.token, groups: response.data.groups };
       })
       .catch(function(response: AxiosResponse) {
-        console.log(response.status);
         switch (response.status) {
           case 401:
             throw new Error("Invalid credentials");

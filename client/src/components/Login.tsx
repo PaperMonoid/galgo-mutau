@@ -130,7 +130,6 @@ class Login extends React.Component<Props, State> {
           <TextField
             id="username"
             label="Número de control"
-            error={username == ""}
             className={classes.textField}
             value={username}
             onChange={this.handleUsernameChange}
@@ -167,7 +166,7 @@ class Login extends React.Component<Props, State> {
           )}
           {invalidTos && (
             <Typography variant="caption" color="secondary" gutterBottom>
-              Debe aceptar los términos y condiciones para poder continuar.
+              Debe aceptar los términos y condiciones para continuar.
             </Typography>
           )}
           <Button
