@@ -1,16 +1,15 @@
 import Class from "./Class";
 
-export default interface Group {
+interface Days {
+  [key: string]: Class;
+}
+
+type Group = Days & {
   key: string;
   name: string;
   credits: number;
   semester: number;
-  monday: Class;
-  tuesday: Class;
-  wednesday: Class;
-  thursday: Class;
-  friday: Class;
-  saturday: Class;
-  sunday: Class;
   teacher: string;
-}
+};
+
+export default Group;

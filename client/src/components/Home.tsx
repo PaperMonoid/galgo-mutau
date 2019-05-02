@@ -135,6 +135,17 @@ class Home extends React.Component<Props, {}> {
             </Link>
           </div>
         )}
+        {session && (
+          <Link to="/horario">
+            <Button
+              variant="contained"
+              color="primary"
+              className={[classes.button, classes.floatRight].join(" ")}
+            >
+              HORARIO
+            </Button>
+          </Link>
+        )}
         <div className={[classes.faq, classes.paddedbox].join(" ")}>
           <Typography variant="h2" gutterBottom>
             FAQ

@@ -13,9 +13,13 @@ import AppBar from "./AppBar";
 import Footer from "./Footer";
 import Home from "./Home";
 import Login from "./Login";
+import ScheduleBuilder from "./ScheduleBuilder";
 import SessionContext from "./SessionContext";
 import Session from "../models/session/Session";
 import SessionFactory from "../models/session/SessionFactory";
+import Schedule from "../models/schedule/Schedule";
+import Algorithm from "../models/optimization/Algorithm";
+import { Generation } from "mutau";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -36,6 +40,7 @@ interface Props extends WithStyles<typeof styles> {}
 interface State {
   session: Session;
   onChange(session: Session): void;
+  generation: Generation<Schedule>;
 }
 
 class App extends React.Component<Props, State> {
@@ -43,7 +48,8 @@ class App extends React.Component<Props, State> {
     super(props);
     this.state = {
       session: null,
-      onChange: this.onChange
+      onChange: this.onChange,
+      generation: new Algorithm([]).generation
     };
     SessionFactory.createDefault()
       .then(this.onChange)
@@ -51,12 +57,15 @@ class App extends React.Component<Props, State> {
   }
 
   onChange = (session: Session) => {
-    this.setState({ session: session });
+    this.setState({
+      session: session,
+      generation: new Algorithm(session.groups).generation
+    });
   };
 
   render() {
     const { classes } = this.props;
-    const { session } = this.state;
+    const { session, generation } = this.state;
     return (
       <SessionContext.Provider value={this.state}>
         <div className={classes.app}>
@@ -64,6 +73,12 @@ class App extends React.Component<Props, State> {
           <div className={classes.content}>
             <Switch>
               <Route exact path="/" render={props => <Home {...props} />} />
+              <Route
+                path="/horario"
+                render={props => (
+                  <ScheduleBuilder generation={generation} {...props} />
+                )}
+              />
               {!session ? (
                 <Route
                   path="/inicio-sesion"
