@@ -1,32 +1,28 @@
-import Group from "./Group";
-import GroupStore from "./GroupStore";
-import GroupResponse from "./GroupResponse";
-import GroupResponseError from "./GroupResponseError";
+import Session from "./Session";
+import Store from "./Store";
 import axios, { AxiosResponse } from "axios";
 
-export default class NetworkGroupStore implements GroupStore {
+export default class NetworkStore implements Store {
   private username: string;
   private password: string;
   private tos: boolean;
-  private token: string;
 
   constructor(username: string, password: string, tos: boolean) {
     this.username = username;
     this.password = password;
     this.tos = tos;
-    this.token = "";
   }
 
-  all(): Promise<GroupResponse> {
+  fetch(): Promise<Session> {
     const username = this.username;
     const password = this.password;
     const tos = this.tos;
+    const params = { username, password, tos };
+    if (!tos) {
+      return Promise.reject(new Error("Invalid terms of service"));
+    }
     return axios
-      .post("http://localhost:8080/api/v0/groups", {
-        username,
-        password,
-        tos
-      })
+      .post("http://localhost:8080/api/v0/groups", params)
       .then(function(response: AxiosResponse) {
         console.log(response.data);
         return { token: response.data.token, groups: response.data.groups };
@@ -35,15 +31,19 @@ export default class NetworkGroupStore implements GroupStore {
         console.log(response.status);
         switch (response.status) {
           case 401:
-            throw GroupResponseError.InvalidCredentials;
+            throw new Error("Invalid credentials");
             break;
           case 400:
-            throw GroupResponseError.InvalidTos;
+            throw new Error("Invalid terms of service");
             break;
           default:
-            throw GroupResponseError.Unavailable;
+            throw new Error("Unavailable");
             break;
         }
       });
+  }
+
+  clear(): Promise<Session> {
+    throw TypeError("Object doesn't support property");
   }
 }

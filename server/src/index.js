@@ -16,13 +16,18 @@ app.get("/ping", function(req, res) {
 });
 
 app.post("/api/v0/groups", function(req, res) {
-  res.setHeader("Content-Type", "application/json");
-  res.send({
-    token: jwt.sign({ collection: false }, process.env["SECRET"], {
-      expiresIn: "1h"
-    }),
-    groups: []
-  });
+  if (req.body.tos) {
+    res.setHeader("Content-Type", "application/json");
+    res.send({
+      token: jwt.sign({ collection: false }, process.env["SECRET"], {
+        expiresIn: "1h"
+      }),
+      groups: []
+    });
+  } else {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send({ message: "User must agree with terms of service." });
+  }
 });
 
 const groups = require("./routes/groups");

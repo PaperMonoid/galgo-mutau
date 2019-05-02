@@ -1,6 +1,11 @@
 import "./App.css";
 import * as React from "react";
-import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  Switch,
+  BrowserRouter as Router,
+  Redirect,
+  Route
+} from "react-router-dom";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -8,6 +13,9 @@ import AppBar from "./AppBar";
 import Footer from "./Footer";
 import Home from "./Home";
 import Login from "./Login";
+import SessionContext from "./SessionContext";
+import Session from "../models/session/Session";
+import SessionFactory from "../models/session/SessionFactory";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -26,54 +34,49 @@ const styles = (theme: Theme) =>
 interface Props extends WithStyles<typeof styles> {}
 
 interface State {
-  token: string;
+  session: Session;
+  onChange(session: Session): void;
 }
 
 class App extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { token: null };
+    this.state = {
+      session: null,
+      onChange: this.onChange
+    };
+    SessionFactory.createDefault()
+      .then(this.onChange)
+      .catch(function() {});
   }
 
-  onStartSession = (token: string) => {
-    this.setState({ token: token });
-  };
-
-  onEndSession = () => {
-    this.setState({ token: null });
+  onChange = (session: Session) => {
+    this.setState({ session: session });
   };
 
   render() {
     const { classes } = this.props;
+    const { session } = this.state;
     return (
-      <div className={classes.app}>
-        <AppBar
-          onStartSession={this.onStartSession}
-          onEndSession={this.onEndSession}
-          token={this.state.token}
-        />
-        <div className={classes.content}>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={props => <Home token={this.state.token} {...props} />}
-            />
-            <Route
-              path="/inicio-sesion"
-              render={props => (
-                <Login
-                  onStartSession={this.onStartSession}
-                  onEndSession={this.onEndSession}
-                  token={this.state.token}
-                  {...props}
+      <SessionContext.Provider value={this.state}>
+        <div className={classes.app}>
+          <AppBar />
+          <div className={classes.content}>
+            <Switch>
+              <Route exact path="/" render={props => <Home {...props} />} />
+              {!session ? (
+                <Route
+                  path="/inicio-sesion"
+                  render={props => <Login {...props} />}
                 />
+              ) : (
+                <Redirect to="/" />
               )}
-            />
-          </Switch>
+            </Switch>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </SessionContext.Provider>
     );
   }
 }

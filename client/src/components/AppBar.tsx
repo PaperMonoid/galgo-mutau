@@ -15,6 +15,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import LogoIcon from "./LogoIcon";
+import SessionContext from "./SessionContext";
+import SessionFactory from "../models/session/SessionFactory";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -38,11 +40,7 @@ const styles = (theme: Theme) =>
     }
   });
 
-interface Props extends WithStyles<typeof styles> {
-  onStartSession(token: string): void;
-  onEndSession(): void;
-  token: string;
-}
+interface Props extends WithStyles<typeof styles> {}
 
 interface State {
   anchorEl: HTMLElement;
@@ -56,10 +54,6 @@ class App extends React.Component<Props, State> {
     };
   }
 
-  handleChange = (event: React.MouseEvent<HTMLElement>): void => {
-    //this.setState({ auth: event.target.checked });
-  };
-
   handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -69,13 +63,17 @@ class App extends React.Component<Props, State> {
   };
 
   handleCloseSession = (): void => {
+    const { onChange } = this.context;
     this.setState({ anchorEl: null });
-    this.props.onEndSession();
+    SessionFactory.createEmpty().then(function(_) {
+      onChange(null);
+    });
   };
 
   render() {
     const { anchorEl } = this.state;
-    const { token, classes } = this.props;
+    const { classes } = this.props;
+    const { session } = this.context;
     const open = Boolean(anchorEl);
     return (
       <div>
@@ -100,7 +98,7 @@ class App extends React.Component<Props, State> {
               </Typography>
             </Link>
             <div className={classes.grow} />
-            {token && (
+            {session && (
               <div>
                 <IconButton
                   aria-owns={open ? "menu-appbar" : undefined}
@@ -136,5 +134,7 @@ class App extends React.Component<Props, State> {
     );
   }
 }
+
+App.contextType = SessionContext;
 
 export default withStyles(styles)(App);

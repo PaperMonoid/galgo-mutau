@@ -12,6 +12,7 @@ import { withStyles } from "@material-ui/core/styles";
 import HelpIcon from "@material-ui/icons/Help";
 import InfoIcon from "@material-ui/icons/Info";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import SessionContext from "./SessionContext";
 import AppBar from "./AppBar";
 import MascotImage from "./MascotImage";
 
@@ -84,13 +85,12 @@ const styles = (theme: Theme) => {
   });
 };
 
-interface Props extends WithStyles<typeof styles> {
-  token: string;
-}
+interface Props extends WithStyles<typeof styles> {}
 
 class Home extends React.Component<Props, {}> {
   render() {
-    const { token, classes } = this.props;
+    const { session } = this.context;
+    const { classes } = this.props;
     return (
       <div>
         <div className={classes.content}>
@@ -114,7 +114,7 @@ class Home extends React.Component<Props, {}> {
             académica.
           </Typography>
         </div>
-        {!token && (
+        {!session && (
           <div
             className={[classes.gettingstarted, classes.paddedbox].join(" ")}
           >
@@ -168,5 +168,7 @@ class Home extends React.Component<Props, {}> {
     );
   }
 }
+
+Home.contextType = SessionContext;
 
 export default withStyles(styles)(Home);
