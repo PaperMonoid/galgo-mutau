@@ -13,6 +13,8 @@ import AppBar from "./AppBar";
 import Footer from "./Footer";
 import Home from "./Home";
 import Login from "./Login";
+import Documentation from "./Documentation";
+import NotFound from "./NotFound";
 import ScheduleBuilder from "./ScheduleBuilder";
 import SessionContext from "./SessionContext";
 import Session from "../models/session/Session";
@@ -59,7 +61,7 @@ class App extends React.Component<Props, State> {
   onChange = (session: Session) => {
     this.setState({
       session: session,
-      generation: new Algorithm(session.groups).generation
+      generation: new Algorithm((session && session.groups) || []).generation
     });
   };
 
@@ -74,19 +76,27 @@ class App extends React.Component<Props, State> {
             <Switch>
               <Route exact path="/" render={props => <Home {...props} />} />
               <Route
+                exact
                 path="/horario"
                 render={props => (
                   <ScheduleBuilder generation={generation} {...props} />
                 )}
               />
+              <Route
+                exact
+                path="/documentacion"
+                render={props => <Documentation {...props} />}
+              />
               {!session ? (
                 <Route
+                  exact
                   path="/inicio-sesion"
                   render={props => <Login {...props} />}
                 />
               ) : (
                 <Redirect to="/" />
               )}
+              <Route exact path="/*" component={NotFound} />
             </Switch>
           </div>
           <Footer />

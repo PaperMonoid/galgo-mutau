@@ -7,8 +7,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Book from "@material-ui/icons/Book";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
@@ -30,6 +32,16 @@ const styles = (theme: Theme) =>
       display: "flex",
       textDecoration: "none",
       color: "black"
+    },
+    docsButton: {
+      display: "flex",
+      textDecoration: "none",
+      color: "black",
+      marginLeft: 10,
+      marginRight: 10
+    },
+    buttonText: {
+      marginLeft: 10
     },
     logoText: {
       marginLeft: 10
@@ -86,7 +98,6 @@ class App extends React.Component<Props, State> {
             >
               <MenuIcon />
             </IconButton>
-
             <Link to="/" className={classes.logoButton}>
               <LogoIcon width={32} height={32} />
               <Typography
@@ -98,6 +109,12 @@ class App extends React.Component<Props, State> {
               </Typography>
             </Link>
             <div className={classes.grow} />
+            <Link to="/documentacion" className={classes.docsButton}>
+              <Button color="default">
+                <Book />
+                <span className={classes.buttonText}>Documentación</span>
+              </Button>
+            </Link>
             {session && (
               <div>
                 <IconButton

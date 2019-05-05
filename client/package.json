@@ -4,18 +4,14 @@
   "description": "A web application to generate class schedules for ITT students.",
   "scripts": {
     "start": "node index.js",
-    "build": "webpack"
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PaperMonoid/galgo-mutau.git"
   },
-  "keywords": [
-    "spa",
-    "genetic-algorithm",
-    "multi-objective",
-    "schedule"
-  ],
+  "keywords": ["spa", "genetic-algorithm", "multi-objective", "schedule"],
   "author": "PaperMonoid",
   "license": "MIT",
   "bugs": {
