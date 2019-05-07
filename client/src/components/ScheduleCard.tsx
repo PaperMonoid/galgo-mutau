@@ -9,72 +9,52 @@ import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Radar } from "react-chartjs-2";
 import Schedule from "../models/schedule/Schedule";
+import Class from "../models/group/Class";
 
 const styles = (theme: Theme) => {
   return createStyles({
-    card: {
-      display: "flex",
-      boxSizing: "border-box",
-      padding: 30
-    },
-    details: {
-      display: "flex",
-      flexDirection: "column"
-    },
-    content: {
-      flex: "1 0 auto"
-    },
-    cover: {
-      width: 151
-    },
     controls: {
       display: "flex",
       alignItems: "center",
       paddingLeft: theme.spacing.unit,
       paddingBottom: theme.spacing.unit
-    },
-    playIcon: {
-      height: 38,
-      width: 38
     }
   });
 };
 
-interface Props extends WithStyles<typeof styles> {
-  schedule: Schedule;
+function formatClass(clazz: Class) {
+  if (clazz && clazz.from && clazz.to) {
+    let fromString = clazz.from.toString();
+    let toString = clazz.to.toString();
+    fromString = fromString.substring(0, 2) + ":" + fromString.substring(2, 4);
+    toString = toString.substring(0, 2) + ":" + toString.substring(2, 4);
+    return `${fromString} - ${toString}`;
+  } else {
+    return "";
+  }
 }
 
-interface State {}
-
-class ScheduleCard extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-  }
-
-  render() {
-    const { classes, schedule } = this.props;
-    return (
-      <Card className={classes.card}>
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
-              Horario
+function ScheduleCard(props) {
+  const { classes, schedule, optimize, data } = props;
+  return (
+    <div>
+      {schedule &&
+        schedule.groups.map(group => (
+          <div key={group.key}>
+            <Typography variant="h5" color="textSecondary">
+              {group.name} {group.key}
             </Typography>
-            {schedule &&
-              schedule.groups.map(group => (
-                <Typography variant="subtitle1" color="textSecondary">
-                  {group.name}
-                </Typography>
-              ))}
-          </CardContent>
-          <div className={classes.controls}>FOO</div>
-        </div>
-        <div className={classes.cover}>BAR</div>
-      </Card>
-    );
-  }
+            <Typography variant="subtitle1" color="textSecondary">
+              {group.teacher}
+            </Typography>
+            <Typography variant="subtitle1" color="textSecondary">
+              {formatClass(group["monday"])}
+            </Typography>
+          </div>
+        ))}
+    </div>
+  );
 }
 
 export default withStyles(styles)(ScheduleCard);

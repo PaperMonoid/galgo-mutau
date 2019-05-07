@@ -1,11 +1,6 @@
 import "./App.css";
 import * as React from "react";
-import {
-  Switch,
-  BrowserRouter as Router,
-  Redirect,
-  Route
-} from "react-router-dom";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -58,6 +53,14 @@ class App extends React.Component<Props, State> {
       .catch(function() {});
   }
 
+  optimize = () => {
+    let { generation } = this.state;
+    for (let i = 0; i < 100; i++) {
+      generation = generation.search();
+    }
+    this.setState({ generation: generation });
+  };
+
   onChange = (session: Session) => {
     this.setState({
       session: session,
@@ -79,7 +82,11 @@ class App extends React.Component<Props, State> {
                 exact
                 path="/horario"
                 render={props => (
-                  <ScheduleBuilder generation={generation} {...props} />
+                  <ScheduleBuilder
+                    optimize={this.optimize}
+                    generation={generation}
+                    {...props}
+                  />
                 )}
               />
               <Route
@@ -87,15 +94,11 @@ class App extends React.Component<Props, State> {
                 path="/documentacion"
                 render={props => <Documentation {...props} />}
               />
-              {!session ? (
-                <Route
-                  exact
-                  path="/inicio-sesion"
-                  render={props => <Login {...props} />}
-                />
-              ) : (
-                <Redirect to="/" />
-              )}
+              <Route
+                exact
+                path="/inicio-sesion"
+                render={props => <Login {...props} />}
+              />
               <Route exact path="/*" component={NotFound} />
             </Switch>
           </div>

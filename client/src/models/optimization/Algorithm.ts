@@ -31,9 +31,9 @@ export default class Algorithm {
       random,
       groups,
       ["MAESTRO"],
-      ["MATERIA"],
-      2,
-      7
+      ["ADMON DE BASE DE DAT", "REDES D COMPUTADORAS"],
+      1300,
+      1900
     );
     const algorithm = new GeneticAlgorithm(
       evolution,

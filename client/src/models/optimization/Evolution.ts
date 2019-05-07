@@ -52,7 +52,7 @@ export default class Evolution implements IEvolution<Schedule> {
   }
 
   fitness(schedule: Schedule): number[] {
-    let subjects = 0;
+    let subjects = (schedule.groups && schedule.groups.length) || 0;
     let teachers = 0;
     let freeHours = 0;
     let previous = null;
@@ -87,6 +87,17 @@ export default class Evolution implements IEvolution<Schedule> {
   isValid(groups: Group[]) {
     let previous = null;
     for (let group of groups) {
+      let count = 0;
+      for (let _group of groups) {
+        if (group.name == _group.name) {
+          count++;
+        }
+      }
+      if (count > 1) {
+        return false;
+      }
+    }
+    for (let group of groups) {
       if (previous != null) {
         for (let day of days) {
           if (
@@ -111,7 +122,7 @@ export default class Evolution implements IEvolution<Schedule> {
   randomizeSample(): Schedule {
     let groups: Group[] = [];
     let [x] = this.random;
-    while (x < 0.9) {
+    while (x < 0.7) {
       let [i] = this.random;
       i = Math.floor(i * this.allGroups.length);
       for (; i < this.allGroups.length; i++) {
@@ -134,7 +145,7 @@ export default class Evolution implements IEvolution<Schedule> {
     let size = Math.min(first.groups.length, second.groups.length);
     for (let i = 0; i < size; i++) {
       let [x] = this.random;
-      if (x < 0.7) {
+      if (x < 0.5) {
         const _groups = groups.concat([first.groups[i]]);
         _groups.sort(function(first: Group, second: Group): number {
           return first["monday"]["from"] - second["monday"]["from"];
@@ -164,7 +175,7 @@ export default class Evolution implements IEvolution<Schedule> {
       }
       [x] = this.random;
     }
-    while (x < 0.5) {
+    while (x < 0.7) {
       let [i] = this.random;
       i = Math.floor(i * this.allGroups.length);
       for (i; i < this.allGroups.length; i++) {

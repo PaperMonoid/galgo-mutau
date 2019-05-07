@@ -66,6 +66,8 @@ class App extends React.Component<Props, State> {
     };
   }
 
+  handleHorario = (event: React.MouseEvent<HTMLElement>): void => {};
+
   handleMenu = (event: React.MouseEvent<HTMLElement>): void => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -139,6 +141,7 @@ class App extends React.Component<Props, State> {
                   open={open}
                   onClose={this.handleClose}
                 >
+                  <MenuItem onClick={this.handleHorario}>Horario</MenuItem>
                   <MenuItem onClick={this.handleCloseSession}>
                     Cerrar sesión
                   </MenuItem>

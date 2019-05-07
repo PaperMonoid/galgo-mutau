@@ -4,22 +4,32 @@ import Typography from "@material-ui/core/Typography";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
-import { Radar } from "react-chartjs-2";
 import SessionContext from "./SessionContext";
 import ScheduleCard from "./ScheduleCard";
+import ScheduleGraph from "./ScheduleGraph";
 import Group from "../models/group/Group";
 import Schedule from "../models/schedule/Schedule";
 import { Generation } from "mutau";
 
 const styles = (theme: Theme) => {
   return createStyles({
-    paper: {
+    content: {
+      display: "flex",
       boxSizing: "border-box",
       padding: 30
+    },
+    schedule: {
+      display: "flex",
+      flexDirection: "column"
+    },
+    growSpace: {
+      flexGrow: 1
+    },
+    graph: {
+      width: 500
     },
     button: {
       margin: theme.spacing.unit
@@ -32,6 +42,7 @@ const styles = (theme: Theme) => {
 
 interface Props extends WithStyles<typeof styles> {
   generation: Generation<Schedule>;
+  optimize: () => void;
 }
 
 interface State {
@@ -45,53 +56,31 @@ class ScheduleBuilder extends React.Component<Props, State> {
   }
 
   render() {
-    const {} = this.state;
-    const { classes } = this.props;
-    const [_, frontier] = this.props.generation.population.frontiers.last();
-    const current = frontier.optimals.last();
-    console.log(current);
-    const data = {
-      labels: [
-        "Materias",
-        "Maestros",
-        "Horas libres",
-        "Hora de entrada",
-        "Hora de salida"
-      ],
-      datasets: [
-        {
-          label: "Óptimo",
-          backgroundColor: "rgba(179,181,198,0.2)",
-          borderColor: "rgba(179,181,198,1)",
-          pointBackgroundColor: "rgba(179,181,198,1)",
-          pointBorderColor: "#fff",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "rgba(179,181,198,1)",
-          data: [10, 10, 0, 10, 10]
-        },
-        {
-          label: "Aptitud",
-          backgroundColor: "rgba(255,99,132,0.2)",
-          borderColor: "rgba(255,99,132,1)",
-          pointBackgroundColor: "rgba(255,99,132,1)",
-          pointBorderColor: "#fff",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "rgba(255,99,132,1)",
-          data: current[0]
-        }
-      ]
-    };
+    let { current } = this.state;
+    const { classes, optimize, generation } = this.props;
+    if (!current) {
+      const [_, frontier] = generation.population.frontiers.last();
+      current = frontier.optimals.last();
+      console.log(frontier.optimals.values());
+    }
     return (
-      <Paper className={classes.paper}>
-        <ScheduleCard schedule={current[1]} />
-        <br />
-        <Radar
-          width={300}
-          height={300}
-          data={data}
-          options={{ maintainAspectRatio: false }}
-        />
-      </Paper>
+      <div className={classes.content}>
+        <div className={classes.schedule}>
+          <ScheduleCard schedule={current[1]} />
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={optimize}
+          >
+            Optimizar
+          </Button>
+        </div>
+        <div className={classes.growSpace} />
+        <div className={classes.graph}>
+          <ScheduleGraph current={current} />
+        </div>
+      </div>
     );
   }
 }

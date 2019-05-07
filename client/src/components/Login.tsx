@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { WithStyles, createStyles } from "@material-ui/core";
@@ -121,6 +121,10 @@ class Login extends React.Component<Props, State> {
       invalidTos
     } = this.state;
     const { classes } = this.props;
+    const { session } = this.context;
+    if (session) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className={classes.center}>
         <Paper className={classes.login}>
